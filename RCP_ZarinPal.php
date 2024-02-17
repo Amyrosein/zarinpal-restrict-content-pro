@@ -2,18 +2,18 @@
 
 /*
 Plugin Name: درگاه پرداخت زرین پال برای Restrict Content Pro
-Version: 4.0.0
+Version: 4.0.1
 Requires at least: 6.0
 Description: درگاه پرداخت <a href="http://www.zarinpal.com/" target="_blank"> زرین پال </a> برای افزونه Restrict Content Pro
 Plugin URI: http://zarinpal.com
 Author: AmirHossein Taghizadeh
 Author URI: http://github.com/Amyrosein
  */
-if ( ! defined('ABSPATH')) {
+if (!defined('ABSPATH')) {
     exit;
 }
 require_once 'ZPStd_Session.php';
-if ( ! class_exists('RCP_ZarinPal')) {
+if (!class_exists('RCP_ZarinPal')) {
     class RCP_ZarinPal
     {
 
@@ -145,68 +145,66 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
         public function ZarinPal_Setting_By_ZPStd($rcp_options)
         {
-            ?>
-            <hr/>
+?>
+            <hr />
             <table class="form-table" style="vertical-align: top">
                 <?php
                 do_action('RCP_ZarinPal_before_settings', $rcp_options); ?>
                 <tr>
-                    <th colspan=2><h3><?php
-                            _e('تنظیمات زرین پال', 'rcp_zarinpal'); ?></h3></th>
+                    <th colspan=2>
+                        <h3><?php
+                            _e('تنظیمات زرین پال', 'rcp_zarinpal'); ?></h3>
+                    </th>
                 </tr>
                 <tr>
                     <th>
                         <label for="rcp_settings[zarinpal_merchant]"><?php
-                            _e('مرچنت زرین پال', 'rcp_zarinpal'); ?></label>
+                                                                        _e('مرچنت زرین پال', 'rcp_zarinpal'); ?></label>
                     </th>
                     <td>
-                        <input class="regular-text" id="rcp_settings[zarinpal_merchant]" style="width: 300px;"
-                               name="rcp_settings[zarinpal_merchant]"
-                               value="<?php
-                               if (isset($rcp_options['zarinpal_merchant'])) {
-                                   echo $rcp_options['zarinpal_merchant'];
-                               } ?>"/>
+                        <input class="regular-text" id="rcp_settings[zarinpal_merchant]" style="width: 300px;" name="rcp_settings[zarinpal_merchant]" value="<?php
+                                                                                                                                                                if (isset($rcp_options['zarinpal_merchant'])) {
+                                                                                                                                                                    echo $rcp_options['zarinpal_merchant'];
+                                                                                                                                                                } ?>" />
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <label for="rcp_settings[zarinpal_name]"><?php
-                            _e('نام نمایشی درگاه', 'rcp_zarinpal'); ?></label>
+                                                                    _e('نام نمایشی درگاه', 'rcp_zarinpal'); ?></label>
                     </th>
                     <td>
-                        <input class="regular-text" id="rcp_settings[zarinpal_name]" style="width: 300px;"
-                               name="rcp_settings[zarinpal_name]"
-                               value="<?php
-                               echo isset($rcp_options['zarinpal_name']) ? $rcp_options['zarinpal_name'] : __(
-                                   'زرین پال',
-                                   'rcp_zarinpal'
-                               ); ?>"/>
+                        <input class="regular-text" id="rcp_settings[zarinpal_name]" style="width: 300px;" name="rcp_settings[zarinpal_name]" value="<?php
+                                                                                                                                                        echo isset($rcp_options['zarinpal_name']) ? $rcp_options['zarinpal_name'] : __(
+                                                                                                                                                            'زرین پال',
+                                                                                                                                                            'rcp_zarinpal'
+                                                                                                                                                        ); ?>" />
                     </td>
                 </tr>
                 <tr>
                     <th>
                         <label><?php
-                            _e('تذکر ', 'rcp_zarinpal'); ?></label>
+                                _e('تذکر ', 'rcp_zarinpal'); ?></label>
                     </th>
                     <td>
                         <div class="description"><?php
-                            _e(
-                                'از سربرگ مربوط به ثبت نام در تنظیمات افزونه حتما یک برگه برای بازگشت از بانک انتخاب نمایید . ترجیحا نامک برگه را لاتین قرار دهید .<br/> نیازی به قرار دادن شورت کد خاصی در برگه نیست و میتواند برگه ی خالی باشد .',
-                                'rcp_zarinpal'
-                            ); ?></div>
+                                                    _e(
+                                                        'از سربرگ مربوط به ثبت نام در تنظیمات افزونه حتما یک برگه برای بازگشت از بانک انتخاب نمایید . ترجیحا نامک برگه را لاتین قرار دهید .<br/> نیازی به قرار دادن شورت کد خاصی در برگه نیست و میتواند برگه ی خالی باشد .',
+                                                        'rcp_zarinpal'
+                                                    ); ?></div>
                     </td>
                 </tr>
                 <input type="hidden" id="rcp_settings[zarinpal_query_name]" value="ZarinPal">
                 <?php
                 do_action('RCP_ZarinPal_after_settings', $rcp_options); ?>
             </table>
-            <?php
+<?php
         }
 
         public function ZarinPal_Request_By_ZPStd($subscription_data)
         {
             $new_subscription_id = get_user_meta($subscription_data['user_id'], 'rcp_subscription_level', true);
-            if ( ! empty($new_subscription_id)) {
+            if (!empty($new_subscription_id)) {
                 update_user_meta($subscription_data['user_id'], 'rcp_subscription_level_new', $new_subscription_id);
             }
 
@@ -236,14 +234,13 @@ if ( ! class_exists('RCP_ZarinPal')) {
             do_action('RCP_Before_Sending_to_ZarinPal', $subscription_data);
             $currency = 'IRT';
 
-            if ( ! in_array($rcp_options['currency'], array(
+            if (!in_array($rcp_options['currency'], array(
                 'irt',
                 'IRT',
                 'تومان',
                 __('تومان', 'rcp'),
                 __('تومان', 'rcp_zarinpal'),
-            ))
-            ) {
+            ))) {
                 $currency = 'IRR';
             }
 
@@ -289,7 +286,7 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
             if ($result['data']['code'] == 100) {
                 ob_end_clean();
-                if ( ! headers_sent()) {
+                if (!headers_sent()) {
                     header(
                         'Location: https://www.zarinpal.com/pg/StartPay/' . $result['data']["authority"] . '/ZarinGate'
                     );
@@ -314,11 +311,11 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
         public function ZarinPal_Verify_By_ZPStd()
         {
-            if ( ! isset($_GET['gateway'])) {
+            if (!isset($_GET['gateway'])) {
                 return;
             }
 
-            if ( ! class_exists('RCP_Payments')) {
+            if (!class_exists('RCP_Payments')) {
                 return;
             }
 
@@ -356,8 +353,7 @@ if ( ! class_exists('RCP_ZarinPal')) {
                         $subscription_key,
                         $payment_method
                     )
-                )
-                ) {
+                )) {
                     $new_payment = 0;
                 }
 
@@ -395,10 +391,10 @@ if ( ! class_exists('RCP_ZarinPal')) {
                         if ($result['data']['code'] == 100) {
                             $payment_status = 'completed';
                             $fault          = 0;
-                            $transaction_id = $result ['data']['ref_id'];
+                            $transaction_id = $result['data']['ref_id'];
                         } else {
                             $payment_status = 'failed';
-                            $fault          = $result ['data']['code'];
+                            $fault          = $result['data']['code'];
                             $transaction_id = 0;
                         }
                     } else {
@@ -441,7 +437,7 @@ if ( ! class_exists('RCP_ZarinPal')) {
                         RCP_set_verifications($rcp_payments->insert($payment_data), __CLASS__, $__param);
 
                         $new_subscription_id = get_user_meta($user_id, 'rcp_subscription_level_new', true);
-                        if ( ! empty($new_subscription_id)) {
+                        if (!empty($new_subscription_id)) {
                             update_user_meta($user_id, 'rcp_subscription_level', $new_subscription_id);
                         }
                         $membership       = (array)rcp_get_memberships()[0];
@@ -461,7 +457,7 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
                         if (version_compare(RCP_PLUGIN_VERSION, '2.1.0', '<')) {
                             rcp_email_subscription_status($user_id, 'active');
-                            if ( ! isset($rcp_options['disable_new_user_notices'])) {
+                            if (!isset($rcp_options['disable_new_user_notices'])) {
                                 wp_new_user_notification($user_id);
                             }
                         }
@@ -483,9 +479,9 @@ if ( ! class_exists('RCP_ZarinPal')) {
                         $log_data = array(
                             'post_title'   => __('تایید پرداخت', 'rcp_zarinpal'),
                             'post_content' => __(
-                                    'پرداخت با موفقیت انجام شد . کد تراکنش : ',
-                                    'rcp_zarinpal'
-                                ) . $transaction_id . __(' .  روش پرداخت : ', 'rcp_zarinpal') . $payment_method,
+                                'پرداخت با موفقیت انجام شد . کد تراکنش : ',
+                                'rcp_zarinpal'
+                            ) . $transaction_id . __(' .  روش پرداخت : ', 'rcp_zarinpal') . $payment_method,
                             'post_parent'  => 0,
                             'log_type'     => 'gateway_error',
                         );
@@ -505,9 +501,9 @@ if ( ! class_exists('RCP_ZarinPal')) {
                         $log_data = array(
                             'post_title'   => __('انصراف از پرداخت', 'rcp_zarinpal'),
                             'post_content' => __(
-                                    'تراکنش به دلیل انصراف کاربر از پرداخت ، ناتمام باقی ماند .',
-                                    'rcp_zarinpal'
-                                ) . __(' روش پرداخت : ', 'rcp_zarinpal') . $payment_method,
+                                'تراکنش به دلیل انصراف کاربر از پرداخت ، ناتمام باقی ماند .',
+                                'rcp_zarinpal'
+                            ) . __(' روش پرداخت : ', 'rcp_zarinpal') . $payment_method,
                             'post_parent'  => 0,
                             'log_type'     => 'gateway_error',
                         );
@@ -527,9 +523,9 @@ if ( ! class_exists('RCP_ZarinPal')) {
                         $log_data = array(
                             'post_title'   => __('خطا در پرداخت', 'rcp_zarinpal'),
                             'post_content' => __(
-                                    'تراکنش به دلیل خطای رو به رو ناموفق باقی باند :',
-                                    'rcp_zarinpal'
-                                ) . $this->Fault($fault) . __(' روش پرداخت : ', 'rcp_zarinpal') . $payment_method,
+                                'تراکنش به دلیل خطای رو به رو ناموفق باقی باند :',
+                                'rcp_zarinpal'
+                            ) . $this->Fault($fault) . __(' روش پرداخت : ', 'rcp_zarinpal') . $payment_method,
                             'post_parent'  => 0,
                             'log_type'     => 'gateway_error',
                         );
@@ -592,9 +588,9 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
             if ($payment_status == 'completed') {
                 $message = '<br/>' . __(
-                        'پرداخت با موفقیت انجام شد . کد تراکنش : ',
-                        'rcp_zarinpal'
-                    ) . $transaction_id . '<br/>';
+                    'پرداخت با موفقیت انجام شد . کد تراکنش : ',
+                    'rcp_zarinpal'
+                ) . $transaction_id . '<br/>';
             }
 
             if ($payment_status == 'cancelled') {
@@ -603,9 +599,9 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
             if ($payment_status == 'failed') {
                 $message = '<br/>' . __(
-                        'تراکنش به دلیل خطای زیر ناموفق باقی باند :',
-                        'rcp_zarinpal'
-                    ) . '<br/>' . $fault . '<br/>';
+                    'تراکنش به دلیل خطای زیر ناموفق باقی باند :',
+                    'rcp_zarinpal'
+                ) . '<br/>' . $fault . '<br/>';
             }
 
             return $content . $message;
@@ -672,11 +668,10 @@ if ( ! class_exists('RCP_ZarinPal')) {
 
             return $response;
         }
-
     }
 }
 new RCP_ZarinPal();
-if ( ! function_exists('change_cancelled_to_pending_By_ZPStd')) {
+if (!function_exists('change_cancelled_to_pending_By_ZPStd')) {
     add_action('rcp_set_status', 'change_cancelled_to_pending_By_ZPStd', 10, 2);
     function change_cancelled_to_pending_By_ZPStd($status, $user_id)
     {
@@ -688,18 +683,18 @@ if ( ! function_exists('change_cancelled_to_pending_By_ZPStd')) {
     }
 }
 
-if ( ! function_exists('RCP_User_Registration_Data_By_ZPStd') && ! function_exists('RCP_User_Registration_Data')) {
+if (!function_exists('RCP_User_Registration_Data_By_ZPStd') && !function_exists('RCP_User_Registration_Data')) {
     add_filter('rcp_user_registration_data', 'RCP_User_Registration_Data_By_ZPStd');
     function RCP_User_Registration_Data_By_ZPStd($user)
     {
         $old_subscription_id = get_user_meta($user['id'], 'rcp_subscription_level', true);
-        if ( ! empty($old_subscription_id)) {
+        if (!empty($old_subscription_id)) {
             update_user_meta($user['id'], 'rcp_subscription_level_old', $old_subscription_id);
         }
 
         $user_info     = get_userdata($user['id']);
         $old_user_role = implode(', ', $user_info->roles);
-        if ( ! empty($old_user_role)) {
+        if (!empty($old_user_role)) {
             update_user_meta($user['id'], 'rcp_user_role_old', $old_user_role);
         }
 
@@ -707,10 +702,10 @@ if ( ! function_exists('RCP_User_Registration_Data_By_ZPStd') && ! function_exis
     }
 }
 
-if ( ! function_exists('RCP_check_verifications')) {
+if (!function_exists('RCP_check_verifications')) {
     function RCP_check_verifications($gateway, $params)
     {
-        if ( ! function_exists('rcp_get_payment_meta_db_name')) {
+        if (!function_exists('rcp_get_payment_meta_db_name')) {
             return;
         }
 
@@ -731,16 +726,16 @@ if ( ! function_exists('RCP_check_verifications')) {
             $wpdb->prepare("SELECT * FROM {$table} WHERE meta_key='_verification_params' AND meta_value='%s'", $params)
         );
 
-        if ( ! empty($check)) {
+        if (!empty($check)) {
             wp_die('وضعیت این تراکنش قبلا مشخص شده بود.');
         }
     }
 }
 
-if ( ! function_exists('RCP_set_verifications')) {
+if (!function_exists('RCP_set_verifications')) {
     function RCP_set_verifications($payment_id, $gateway, $params)
     {
-        if ( ! function_exists('rcp_get_payment_meta_db_name')) {
+        if (!function_exists('rcp_get_payment_meta_db_name')) {
             return;
         }
 
